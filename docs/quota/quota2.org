@@ -1,0 +1,35 @@
+* Quota todo list
+** Investigate XFS project id internals
+** Add tree id to ext4 inode
+*** Prohibit bad operations like
+**** rename
+    1) disallow for all types where ddir->tree_id != sdir->tree_id
+    2) allow for all types except DIR, and i_lnk != 1
+**** link
+    allow only if src->tree_id == dst->tree_id
+*** Add runtime checks for inapropriate tree.
+    In fact some one may turn-off TREE_ID mount flag and then mix up tries
+    content. Later TREE_ID flag may passed on new mount (remount are not possible) 
+    We have to check what tree inheritance assumption is ok.
+**** TODO define inheritance assumptions
+**** TODO find suitable place for checks
+     suitable place is following where we have parent dentry and child dentry
+     The check must being done only once because it is not possible to change
+     it back.
+     Probably ext4_lookup is a good candidate for that.
+     In case of error inode will be marked as containg bad quota.
+     this may result in troubles because it may already contain quota info.
+     In this case we have to print _huge_ warning msg and drop quota.
+** Add tree quota support to ext4
+**** Testing
+     * Add tree id support to fsstress.
+     * add mv rename operation.
+** Add separate tree/usr quota id for ext4
+   This task must being done in following steps
+*** Extend qutid_t type to 64 bit (Change all interfaces to use this bits)
+*** Investigate quota file format v0
+*** Create 64-bit quota file format
+**** Testing
+     It must being tested with fsstress like follows on ext4:
+     - decode id = (id << 32) + ~((int)id)
+     - decode id = (id << 32) + tree_id  

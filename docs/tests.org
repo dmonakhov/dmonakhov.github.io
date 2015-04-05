@@ -1,0 +1,31 @@
+* mainstream
+** block devices
+ - dm-linear
+ - dm-crypt
+ - raid0
+ - raid1
+ - loop
+** filesystem
+*** fs types
+ - ext2
+ - ext3
+ - ext4
+ - ext4 driver over ext3
+ - ext3/4 with external journal
+*** options
+ - w/o quota
+ - quota
+ - journal quota ( HIGH)
+ - discard (LOW)
+ - faulty mem slabs -> clear 
+ - nojournal mode (LOW)
+** Tests
+ - fsstress + dd (VERY HIGH)
+ - xfsqa (VERY HIGH)
+ - fsstress with power-off
+ - barrier test (LOW)
+ - fs-resize (LOW)
+
+** fsck
+ - quota-check
+ - fsck with error-bit fix after faulty mem slabs

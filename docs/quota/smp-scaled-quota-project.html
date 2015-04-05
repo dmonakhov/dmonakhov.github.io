@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+
+<title>Quota SMP scalability project page</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2010-03-29 08:24:06 MSD"/>
+<meta name="author" content="Dmitry Monakhov"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Quota SMP scalability project page</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 quota SMP scalability project </a>
+<ul>
+<li><a href="#sec-1.1">1.1 Intro </a></li>
+<li><a href="#sec-1.2">1.2 Current locks and locking rules </a>
+<ul>
+<li><a href="#sec-1.2.1">1.2.1 Locks </a></li>
+<li><a href="#sec-1.2.2">1.2.2 Functions and lock table </a></li>
+</ul>
+</li>
+<li><a href="#sec-1.3">1.3 Most contented locks chart </a></li>
+<li><a href="#sec-1.4">1.4 locking changes </a>
+<ul>
+<li><a href="#sec-1.4.1">1.4.1 i_mutex for quota file </a></li>
+<li><a href="#sec-1.4.2">1.4.2 dqio_mutex </a></li>
+<li><a href="#sec-1.4.3">1.4.3 dqptr_sem </a></li>
+<li><a href="#sec-1.4.4">1.4.4 dq_data_lock </a></li>
+<li><a href="#sec-1.4.5">1.4.5 dqstats </a></li>
+<li><a href="#sec-1.4.6">1.4.6 dquot hash table </a></li>
+<li><a href="#sec-1.4.7">1.4.7 write doc about  dquot reference counting redesign </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> quota SMP scalability project </h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Intro </h3>
+<div class="outline-text-3" id="text-1.1">
+
+<p>Current Linux quota implementation has been written about 10 year ago.
+It satisfy just basic smp correctness semantics(deadlock avoidance).
+Code contains several global locks which protects data.
+As result it has awful smp scalability. It is almost useless
+to use quota on systems with more than 8 CPU. This project is 
+aimed to rewrite quota code to make it more scalable. This paper
+contains guide for accomplish this task. The paper divided in to three parts:
+</p><dl>
+<dt>Current locks and locking rules</dt><dd>
+It is almost impossible to understand
+real locking rules from code comments. So I've collected updated list
+of locks, and table of locks for each quota function.
+</dd>
+<dt>Definition of most contented locks</dt><dd>
+Definition of most contented locks
+</dd>
+<dt>Proposed locking changes</dt><dd>
+This part contains basic ideas for locking 
+changes, and purposed solutions.
+</dd>
+</dl>
+</div>
+
+</div>
+
+<div id="outline-container-1.2" class="outline-3">
+<h3 id="sec-1.2"><span class="section-number-3">1.2</span> Current locks and locking rules </h3>
+<div class="outline-text-3" id="text-1.2">
+
+
+</div>
+
+<div id="outline-container-1.2.1" class="outline-4">
+<h4 id="sec-1.2.1"><span class="section-number-4">1.2.1</span> Locks </h4>
+<div class="outline-text-4" id="text-1.2.1">
+
+<dl>
+<dt>dq_list_lock</dt><dd>
+protects all lists with quotas and quota formats 
+dqstats structure containing statistics about the lists, dqstats structure(<b>madness</b>)
+</dd>
+<dt>dq_data_lock</dt><dd>
+protects data from dq_dqb and also mem_dqinfo structures and
+also guards consistency of dquot-&gt;dq_dqb with inode-&gt;i_blocks, i_bytes.                
+</dd>
+<dt>dq_state_lock protects</dt><dd>
+modifications of quota state (on quotaon and quotaoff)
+</dd>
+<dt>dqonoff_sem</dt><dd>
+protect from on/off race
+</dd>
+<dt>dqptr_sem (per sb rw sem)</dt><dd>
+Any operation working on dquots via inode pointers must hold it.
+</dd>
+<dt>dq_lock (per dquot mutex)</dt><dd>
+dquot is locked only when it is being read to memory
+</dd>
+<dt>dqio_mutex (per dquot mutex)</dt><dd>
+per sb io mutex.
+</dd>
+<dt>i_mutex (prer quota file)</dt><dd>
+each io operation required this mutex,
+in case of journalled quota <span style="text-decoration:underline;">all operations result in quota write</span>.
+
+</dd>
+</dl>
+</div>
+
+</div>
+
+<div id="outline-container-1.2.2" class="outline-4">
+<h4 id="sec-1.2.2"><span class="section-number-4">1.2.2</span> Functions and lock table </h4>
+<div class="outline-text-4" id="text-1.2.2">
+
+
+
+
+
+<pre class="example"> *table legend* 
+  - dat :: dq_data_lock
+  - drt :: mark_quota_dirty() is called form this function.
+  - number :: lock order
+  - g :: guarded by this lock, caller must hold it.
+  - INLK :: inode_lock
+  - in dqptr ::  WR = down_write, rd = down_read
+  - List manipulation in lst column
+       *First char == an action, 
+         - a :: add in to a list              
+         - r :: remove from a list
+         - t :: traverse a list
+       *Second char == a list           
+         - i :: inuse_list
+         - d :: dirty_list
+         - f :: free_list
+         - F :: tofree_head (dq_free) in remove_inode_dquot_ref()
+
+|---------------------------+-----+----+-----+----+----+----+---+---|
+|                           |     |    |     |    |    | On | d | d |
+|                           |     |    |     | qd | dq | Of | a | r |
+| func name                 | lst | st | ptr | lk | io |    | t | t |
+|---------------------------+-----+----+-----+----+----+----+---+---|
+| wait_on_dquot             |     |    |     |  1 |    |    |   |   |
+| dquot_mark_dquot_dirty    | ad  |    |     |    |    |    |   |   |
+| clear_dquot_dirty         | grd |    |     |    |    |    |   |   |
+| dquot_acquire             |     |    |     |  1 |  2 |    |   |   |
+| dquot_commit  cl drt      | 2rd |    |     |    |  1 |    |   |   |
+| dquot_release             |     |    |     |  1 |  2 |    |   |   |
+| invalidate_dquots INLK    |     |    |     |    |    |    |   |   |
+| dquot_scan_active (ocfs2) | 2ti |    |     |    |    |  1 |   |   |
+| vfs_quota_sync -&gt;wr_dq    | 2td |    |     |    |    |  1 |   |   |
+| shrink_dqcache_memory     | dif |    |     |    |    |    |   |   |
+| dqput lts_l: dq_count     | 1   |    |     |    |    |    |   |   |
+| dqget lst_l: dqhash       | 1   |  2 |     |    |    |    |   |   |
+| dquot_initialize -&gt;dqget  |     |    | ?WR |    |    |    |   |   |
+| add_dquot_ref / INLK      |     |    |     |    |    |  g |   |   |
+| remove_inode_dquot_ref    | 1aF |    | gWR |    |    |    |   |   |
+| remove_dquot_ref /  INLK  |     |    |     |    |    |    |   |   |
+| drop_dquot_ref /          |     |    | WR  |    |    |    |   |   |
+| dquot_drop   -&gt;dqput      |     |    | WR  |    |    |    |   |   |
+| dquot_transfer -&gt;dqget    |     |    | WR2 |    |    |    | 1 | 1 |
+| dquot_commit_info         |     |    |     |    |  1 |    |   |   |
+| vfs_quota_disable         |     |  2 |     |    |    |  1 |   |   |
+| vfs_load_quota_inode      |     |  3 | WR2 |    |  3 |  1 |   |   |
+| __dquot_alloc_space [as]  |     |    |     |    |    |    | 1 |   |
+| dquot_alloc_space  -&gt;as   |     |    | rd  |    |    |    |   | 1 |
+| dquot_reserve_space -&gt;as  |     |    | rd  |    |    |    |   |   |
+| dquot_alloc_inode         |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_claim_space         |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_release_rsrv_spc    |     |    | rd  |    |    |    | 1 |   |
+| dquot_free_space          |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_free_inode          |     |    | rd  |    |    |    | 1 | 1 |
+|---------------------------+-----+----+-----+----+----+----+---+---|
+</pre>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1.3" class="outline-3">
+<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Most contented locks chart </h3>
+<div class="outline-text-3" id="text-1.3">
+
+<dl>
+<dt>i_mutex</dt><dd>
+This is most annoying lock in case of journalled quota.
+Just think about it. Then several concurrent users perform write.
+they have to getting in to sleep on i_mutex. <b>CRAP</b> <br/>
+vfs_dq_alloc_space()-&gt;mark_quota_dirty()-&gt;write_quot()
+</dd>
+<dt>dqio_mutex</dt><dd>
+Same as previous, per sb io mutex.
+</dd>
+<dt>dqptr_sem</dt><dd>
+Currently this acquired on write during vfs_dq_init()
+In fact many vfs functions call this callback, for example
+(open(for write), truncate, unlink, link, etc).
+</dd>
+<dt>dq_data_lock</dt><dd>
+Problem with this lock is what it is global. It must
+protect just given dquot and inode's bytes struct.
+</dd>
+<dt>dq_list_lock</dt><dd>
+Again the lock is global, proper code reorganization will help.
+</dd>
+<dt>dq_state_lock</dt><dd>
+Why do we need it? we already have dqonoff_sem,
+This is overwhelming.
+
+</dd>
+</dl>
+</div>
+
+</div>
+
+<div id="outline-container-1.4" class="outline-3">
+<h3 id="sec-1.4"><span class="section-number-3">1.4</span> locking changes </h3>
+<div class="outline-text-3" id="text-1.4">
+
+
+
+</div>
+
+<div id="outline-container-1.4.1" class="outline-4">
+<h4 id="sec-1.4.1"><span class="section-number-4">1.4.1</span> i_mutex for quota file </h4>
+<div class="outline-text-4" id="text-1.4.1">
+
+<p>Do we really need it? Quota file can not be truncated, it is append only.<br/>
+Quota file grows only if there is no space for new dquot. Once allocated
+dquota never change it's location. So let's replace i_mutex with rw_sem.<br/>
+<b>Locking rules</b>
+</p><dl>
+<dt>down_write</dt><dd>
+Then new dquot has not allocated inside quota file yet.
+</dd>
+<dt>down_read</dt><dd>
+For dquot which already has offset inside quota file.
+</dd>
+</dl>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.2" class="outline-4">
+<h4 id="sec-1.4.2"><span class="section-number-4">1.4.2</span> dqio_mutex </h4>
+<div class="outline-text-4" id="text-1.4.2">
+
+<p>In case of journalled quota we always call dquot_commit() after each
+dquot modification, but in fact other thread may change dquot after
+we dropped dq_data_lock, but before we have copied data in commit_dqblk()
+So let's use only one waiter at a time. <br/>
+<b>HUGE NOTE</b> This approach will works only because of ext3/4 
+allows the only one running transaction at a time, so both
+task (current and the one which wait for the lock) belongs to the
+same transaction. <span style="text-decoration:underline;">see example</span>
+</p>
+<ul>
+<li id="sec-1.4.2.1">alloc_space() <br/>
+
+
+
+<pre class="example">alloc_space()
+  /* update dquot */
+  mark_quota_dirty()
+    dquot_commit()
+      if (test_and_set_bit(DQ_DIRTY_B, &amp;dquot-&gt;dq_flags))
+         /* Other task already wait for the mutex, and our changes will
+          * be copied and written to a disk by this waiter.
+          * _HUGE NOTE_: This approach will works only because of ext3/4 
+          * allows the only one running transaction at a time, so both
+          * task (current and the one which wait for the lock) belongs 
+          * to the same transaction
+          */
+         return;
+      lock(dqopt-&gt;dqio_mutex)
+      copy_mem(tmp, dquot-&gt;dq_dqb, size)
+      /* let others know what data was already copied, so new copy is needed*/
+      clear_bit(DQ_DIRTY_B, &amp;dquot-&gt;dq_flags)
+      /* perform io here */
+      unlock(dqopt-&gt;dqio_mutex)
+</pre>
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.3" class="outline-4">
+<h4 id="sec-1.4.3"><span class="section-number-4">1.4.3</span> dqptr_sem </h4>
+<div class="outline-text-4" id="text-1.4.3">
+
+<p>Currently this lock is taken for write only in vfs_dq_init() and vfs_dq_transfer(). <br/>
+vfs_dq_init() is most performance critical and trivial operation.
+Function just assign dquot to inode. So we can easily change it to down_read().
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.4.4" class="outline-4">
+<h4 id="sec-1.4.4"><span class="section-number-4">1.4.4</span> dq_data_lock </h4>
+<div class="outline-text-4" id="text-1.4.4">
+
+<p>Replace this lock by per dquot lock. Locks will acquired in native order
+</p>
+
+
+<pre class="example">dquot = inode-&gt;i_dquot;
+for (cnt = 0; cnt &lt; MAXQUOTAS; cnt++)
+  if (dquot[cnt])
+     lock(&amp;dquot[cnt].data_lock);
+/* modify dquotas here */
+....
+</pre>
+
+
+
+<p>
+On dquot_transfer() we have to lock both from_dquot and to_dquot
+so just use generic double_lock() scenario.
+</p></div>
+
+</div>
+
+<div id="outline-container-1.4.5" class="outline-4">
+<h4 id="sec-1.4.5"><span class="section-number-4">1.4.5</span> dqstats </h4>
+<div class="outline-text-4" id="text-1.4.5">
+
+<p>Quota stats should not use any locking. Let's just use anomic
+operations for this.
+</p></div>
+
+</div>
+
+<div id="outline-container-1.4.6" class="outline-4">
+<h4 id="sec-1.4.6"><span class="section-number-4">1.4.6</span> dquot hash table </h4>
+<div class="outline-text-4" id="text-1.4.6">
+
+<p>must being protected by RCU. It is better to prepare patch instead
+of describing it here.
+</p></div>
+
+</div>
+
+<div id="outline-container-1.4.7" class="outline-4">
+<h4 id="sec-1.4.7"><span class="section-number-4">1.4.7</span> write doc about  dquot reference counting redesign </h4>
+<div class="outline-text-4" id="text-1.4.7">
+
+<p>Currently dqget() consists of several simple operations:
+</p><dl>
+<dt>dq_lookup_nolock()</dt><dd>
+trivial lookup in hash table
+</dd>
+<dt>dq_read_insert()</dt><dd>
+read dquot from disk and insert to hash_table
+</dd>
+<dt>__dqget()</dt><dd>
+inc dq_count
+</dd>
+</dl>
+
+<p>First of all we have to rename dqget() dq_lookup(). <br/>
+In fact dq_lookup_nolock() will succeed in 99% of cases(fast_path)
+So dqget becomes lockess on the fast path.
+<b>TODO:</b> Complete this topic.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Dmitry Monakhov
+<a href="mailto:dmonakhov@openvz.org">&lt;dmonakhov@openvz.org&gt;</a>
+</p>
+<p class="date"> Date: 2010-03-29 08:24:06 MSD</p>
+<p class="creator">HTML generated by org-mode 6.30c in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

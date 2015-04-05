@@ -1,0 +1,75 @@
+* Random thoughts, not related with a quota
+** Mark CT private-root directory with EXT\_TOPDIR\_FL
+   ext3 trys to optimize block allocation relative to it's root-dir
+   (different dirs will use different block groups for allocation.T
+   his helps to reduce fragmentation). But in our case effectively
+   "/vz/private/" is the root of our tree. And we may mark it by
+   special flag: "sh chattr +T /vz/private"
+   Theoretically this may helps to reduce file fragmentation.
+
+** register/unregister CT via vzctl
+     - _FIXME_: I'm not remember, but seems what is already done.
+       Introduce register/unregister actions for CT (vzctl)
+       In fact VE-private tree becomes complex structure
+       with complex structure long time ago, so plain copy
+       is may result in bad consequences even without quota.tree feature.
+       This is _must have_ feature regardless to quota.
+       Register CT must have act simular VM's register/unregister.
+       It must check all requirements and fix if some necessery.
+
+
+* native quota support for containers.
+** Possible implementation for user/group quota.
+*** Design
+   1) enlarge dqot_t to 64 bit.
+   2) Introduce new quota format for separate tree quota.
+      Which encode quot_id as quot_id = tree_id<<32 + id;
+   3) use global user/group file for all tries.
+*** Backward comatibility.
+   4) support virtual quota file "/root/ve/aquota.user" for backward 
+      compatibility with old quota-tools. The code is trivial.
+      It may be handled by VEFS or patched ext3 version.
+*** Notes:
+    PRO :: Straight and simple design. It is unlikely to brake well
+    tuned code, we just simply extending it with-out full redesigning.
+    CONT :: We have to support compat file for older quota-tools
+      
+      
+** Common quota implemantation issues.
+   I've collect random issues which comes in to my mind.
+***  Choose suitable place to store CT-id on per-inode basis 	:Impl:Design:
+     possibilities are:
+     - inside inode itself, only for ext4 (Or change ext3+lib2fs)
+       _note_: As i understand you already pick this one.
+     - or second xatrr will works for all fs, but with performance penalty
+*** VE <=> VE files coping/movement issue.			:Impl:Design:
+    If we about to embed CT-id to inode, when we will have problems with
+    following user actions:
+    - simple CT clone: cp -r private/{CTID\_1} /private/{CTID\_2}
+      Currently this action has no side effects except changes
+      in config file (netdev:hwaddr and etc.)
+    - copy/move/rename from file  private to private. Currently this is
+      prohibited by alexey@ because this result in incorrect quota on dst CT,
+      but now things becomes even worse because file moved will still
+      belongs to src CT quota.
+
+**** Solution							       :Impl:
+     - We have to made some assumptions about fs-tree and check in run-time
+       in path\_lookup, quota\_fn, vefs\_lookup:
+#+BEGIN_SRC c
+       * entry->d_parent->tree_id == entry->tree_id (except for CT-root)
+	 exceptions: must be marked explicitly by one of ext2_extent_fl	
+       * CT may access only files in it's tree.
+	 current_ve_id == entry->tree_id 
+       * VEFS check: if lower file is in private then
+	 VEFS_INFO(inode->i_sb)->ve_id == inode->lower_file->tree_id
+#+END_SRC c
+** Quota issues with your design.
+   In short this means significant quota code redesign.
+*** think how and where to store quota files 			       :Impl:
+    We can't store quota files for all CTs in one plain quota array.
+    Otherwise MAXQUOTAS will be equals to NUM\_PISSIBLE\_VE * 2 + 1 =~ 1000
+    : don't forget anout this inode->i_dquot[MAXQUOTAS] 
+*** Be aware of hardcoded quota values				       :Impl:
+    quotaops.h: sb_any_quota_active directly rely on USR and GRP quota.
+    dquot.c: hashfn() redone according to

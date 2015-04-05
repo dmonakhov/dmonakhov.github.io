@@ -1,0 +1,22 @@
+* About me
+
+  *Linux kernel developer at Parallels*
+
+  [[https://plus.google.com/101761226576930717211][GPlus profile]]
+  [[mailto:dmonakhov@openvz.org][EMAIL:<dmonakhov@openvz.org>]]
+
+* Curren projects
+** TODO Fill this chapter
+
+* Older project list
+
+** Quota
+*** SMP scalibility project
+- [[file:docs/quota/smp-scaled-quota-project.org][SMP scalibility project]]
+- [[file:docs/quota/quota.org::*Random%20thoughts,%20not%20related%20with%20a%20quota][Random thoughts, not related with a quota]]
+- [[file:docs/quota/quota2.org::*Quota%20list][Quota todo list]]
+- [[file:docs/quota/TODO.org][quota todo list]]
+
+** Tests
+[[file:docs/tests.org::*mainstream][  - Tests]]
+

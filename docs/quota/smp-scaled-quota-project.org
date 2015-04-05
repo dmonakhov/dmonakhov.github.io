@@ -1,0 +1,179 @@
+#+TITLE: Quota SMP scalability project page
+
+* quota SMP scalability project
+** Intro
+Current Linux quota implementation has been written about 10 year ago.
+It satisfy just basic smp correctness semantics(deadlock avoidance).
+Code contains several global locks which protects data.
+As result it has awful smp scalability. It is almost useless
+to use quota on systems with more than 8 CPU. This project is 
+aimed to rewrite quota code to make it more scalable. This paper
+contains guide for accomplish this task. The paper divided in to three parts:
+- Current locks and locking rules :: It is almost impossible to understand
+     real locking rules from code comments. So I've collected updated list
+     of locks, and table of locks for each quota function.
+- Definition of most contented locks :: Definition of most contented locks
+- Proposed locking changes :: This part contains basic ideas for locking 
+     changes, and purposed solutions.
+** Current locks and locking rules
+*** Locks
+- dq\_list\_lock :: protects all lists with quotas and quota formats 
+  dqstats structure containing statistics about the lists, dqstats structure(*madness*)
+- dq\_data\_lock :: protects data from dq\_dqb and also mem\_dqinfo structures and
+  also guards consistency of dquot->dq\_dqb with inode->i\_blocks, i\_bytes.		    
+- dq\_state\_lock protects :: modifications of quota state (on quotaon and quotaoff)
+- dqonoff\_sem ::  protect from on/off race
+- dqptr\_sem (per sb rw sem) :: Any operation working on dquots via inode pointers must hold it.
+- dq\_lock (per dquot mutex) :: dquot is locked only when it is being read to memory
+- dqio\_mutex (per dquot mutex) :: per sb io mutex.
+- i\_mutex (prer quota file) :: each io operation required this mutex,
+     in case of journalled quota _all operations result in quota write_.
+
+*** Functions and lock table
+
+#+BEGIN_EXAMPLE 
+ *table legend* 
+  - dat :: dq_data_lock
+  - drt :: mark_quota_dirty() is called form this function.
+  - number :: lock order
+  - g :: guarded by this lock, caller must hold it.
+  - INLK :: inode_lock
+  - in dqptr ::  WR = down_write, rd = down_read
+  - List manipulation in lst column
+       *First char == an action, 
+         - a :: add in to a list	      
+         - r :: remove from a list
+         - t :: traverse a list
+       *Second char == a list		
+         - i :: inuse_list
+         - d :: dirty_list
+         - f :: free_list
+         - F :: tofree_head (dq_free) in remove_inode_dquot_ref()
+
+|---------------------------+-----+----+-----+----+----+----+---+---|
+|                           |     |    |     |    |    | On | d | d |
+|                           |     |    |     | qd | dq | Of | a | r |
+| func name                 | lst | st | ptr | lk | io |    | t | t |
+|---------------------------+-----+----+-----+----+----+----+---+---|
+| wait_on_dquot             |     |    |     |  1 |    |    |   |   |
+| dquot_mark_dquot_dirty    | ad  |    |     |    |    |    |   |   |
+| clear_dquot_dirty         | grd |    |     |    |    |    |   |   |
+| dquot_acquire             |     |    |     |  1 |  2 |    |   |   |
+| dquot_commit  cl drt      | 2rd |    |     |    |  1 |    |   |   |
+| dquot_release             |     |    |     |  1 |  2 |    |   |   |
+| invalidate_dquots INLK    |     |    |     |    |    |    |   |   |
+| dquot_scan_active (ocfs2) | 2ti |    |     |    |    |  1 |   |   |
+| vfs_quota_sync ->wr_dq    | 2td |    |     |    |    |  1 |   |   |
+| shrink_dqcache_memory     | dif |    |     |    |    |    |   |   |
+| dqput lts_l: dq_count     | 1   |    |     |    |    |    |   |   |
+| dqget lst_l: dqhash       | 1   |  2 |     |    |    |    |   |   |
+| dquot_initialize ->dqget  |     |    | ?WR |    |    |    |   |   |
+| add_dquot_ref / INLK      |     |    |     |    |    |  g |   |   |
+| remove_inode_dquot_ref    | 1aF |    | gWR |    |    |    |   |   |
+| remove_dquot_ref /  INLK  |     |    |     |    |    |    |   |   |
+| drop_dquot_ref /          |     |    | WR  |    |    |    |   |   |
+| dquot_drop   ->dqput      |     |    | WR  |    |    |    |   |   |
+| dquot_transfer ->dqget    |     |    | WR2 |    |    |    | 1 | 1 |
+| dquot_commit_info         |     |    |     |    |  1 |    |   |   |
+| vfs_quota_disable         |     |  2 |     |    |    |  1 |   |   |
+| vfs_load_quota_inode      |     |  3 | WR2 |    |  3 |  1 |   |   |
+|                           |     |    |     |    |    |    |   |   |
+| __dquot_alloc_space [as]  |     |    |     |    |    |    | 1 |   |
+| dquot_alloc_space  ->as   |     |    | rd  |    |    |    |   | 1 |
+| dquot_reserve_space ->as  |     |    | rd  |    |    |    |   |   |
+| dquot_alloc_inode         |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_claim_space         |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_release_rsrv_spc    |     |    | rd  |    |    |    | 1 |   |
+| dquot_free_space          |     |    | rd  |    |    |    | 1 | 1 |
+| dquot_free_inode          |     |    | rd  |    |    |    | 1 | 1 |
+|---------------------------+-----+----+-----+----+----+----+---+---|
+#+END_EXAMPLE
+** Most contented locks chart
+1) i\_mutex :: This is most annoying lock in case of journalled quota.
+	       Just think about it. Then several concurrent users perform write.
+	       they have to getting in to sleep on i\_mutex. *CRAP* \\ 
+	       vfs\_dq\_alloc\_space()->mark\_quota\_dirty()->write\_quot()
+2) dqio\_mutex :: Same as previous, per sb io mutex.
+3) dqptr\_sem :: Currently this acquired on write during vfs\_dq\_init()
+		 In fact many vfs functions call this callback, for example
+		 (open(for write), truncate, unlink, link, etc).
+4) dq\_data\_lock :: Problem with this lock is what it is global. It must
+     protect just given dquot and inode's bytes struct.
+5) dq\_list\_lock :: Again the lock is global, proper code reorganization will help.
+6) dq\_state\_lock :: Why do we need it? we already have dqonoff\_sem,
+     This is overwhelming.
+
+** locking changes
+
+*** i\_mutex for quota file
+    Do we really need it? Quota file can not be truncated, it is append only.\\
+    Quota file grows only if there is no space for new dquot. Once allocated
+    dquota never change it's location. So let's replace i\_mutex with rw\_sem.\\
+    *Locking rules*
+    - down\_write :: Then new dquot has not allocated inside quota file yet.
+    - down\_read :: For dquot which already has offset inside quota file.
+*** dqio\_mutex
+    In case of journalled quota we always call dquot\_commit() after each
+    dquot modification, but in fact other thread may change dquot after
+    we dropped dq\_data\_lock, but before we have copied data in commit\_dqblk()
+    So let's use only one waiter at a time. \\
+    *HUGE NOTE* This approach will works only because of ext3/4 
+    allows the only one running transaction at a time, so both
+    task (current and the one which wait for the lock) belongs to the
+    same transaction. _see example_
+
+**** alloc\_space()
+#+BEGIN_EXAMPLE c
+    alloc_space()
+      /* update dquot */
+      mark_quota_dirty()
+        dquot_commit()
+	  if (test_and_set_bit(DQ_DIRTY_B, &dquot->dq_flags))
+	     /* Other task already wait for the mutex, and our changes will
+	      * be copied and written to a disk by this waiter.
+	      * _HUGE NOTE_: This approach will works only because of ext3/4 
+	      * allows the only one running transaction at a time, so both
+	      * task (current and the one which wait for the lock) belongs 
+	      * to the same transaction
+	      */
+	     return;
+          lock(dqopt->dqio_mutex)
+	  copy_mem(tmp, dquot->dq_dqb, size)
+	  /* let others know what data was already copied, so new copy is needed*/
+	  clear_bit(DQ_DIRTY_B, &dquot->dq_flags)
+	  /* perform io here */
+	  unlock(dqopt->dqio_mutex)
+#+END_EXAMPLE
+*** dqptr\_sem
+    Currently this lock is taken for write only in vfs\_dq\_init() and vfs\_dq\_transfer(). \\
+    vfs\_dq\_init() is most performance critical and trivial operation.
+    Function just assign dquot to inode. So we can easily change it to down\_read().
+
+*** dq\_data\_lock
+    Replace this lock by per dquot lock. Locks will acquired in native order
+#+BEGIN_EXAMPLE c
+    dquot = inode->i_dquot;
+    for (cnt = 0; cnt < MAXQUOTAS; cnt++)
+      if (dquot[cnt])
+         lock(&dquot[cnt].data_lock);
+    /* modify dquotas here */
+    ....
+#+END_EXAMPLE
+    On dquot\_transfer() we have to lock both from\_dquot and to\_dquot
+    so just use generic double\_lock() scenario.
+*** dqstats
+    Quota stats should not use any locking. Let's just use anomic
+    operations for this.
+*** dquot hash table
+    must being protected by RCU. It is better to prepare patch instead
+    of describing it here.
+*** write doc about  dquot reference counting redesign
+    Currently dqget() consists of several simple operations:
+    - dq\_lookup\_nolock() :: trivial lookup in hash table
+    - dq\_read\_insert() :: read dquot from disk and insert to hash\_table
+    - \_\_dqget() :: inc dq\_count
+   First of all we have to rename dqget() dq\_lookup(). \\		     
+   In fact dq\_lookup\_nolock() will succeed in 99% of cases(fast\_path)
+   So dqget becomes lockess on the fast path.
+   *TODO:* Complete this topic.
+		     

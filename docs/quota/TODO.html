@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>TODO</title>
+<!-- 2015-04-05 Sun 12:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Dmitry Monakhov" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">TODO</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">functionse</a>
+<ul>
+<li><a href="#sec-1-1">table</a>
+<ul>
+<li><a href="#sec-1-1-1">functions</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-2">Thoughts</a>
+<ul>
+<li><a href="#sec-1-2-1">dquot<sub>initialize</sub></a></li>
+<li><a href="#sec-1-2-2">dquot<sub>on</sub></a></li>
+<li><a href="#sec-1-2-3">visiable quota changes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-2">TOP ISSUES</a>
+<ul>
+<li><a href="#sec-2-1"><span class="todo TODO">TODO</span> quota<sub>write</sub></a>
+<ul>
+<li><a href="#sec-2-1-1">Possible solutions.</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-2"><span class="todo TODO">TODO</span> smart<sub>make</sub><sub>dirty</sub></a>
+<ul>
+<li><a href="#sec-2-2-1">SMART MAKE DIRTY technique</a></li>
+</ul>
+</li>
+<li><a href="#sec-2-3"><span class="todo TODO">TODO</span> rewrite vfs<sub>dq</sub><sub>init</sub> <code>[1/2]</code></a></li>
+</ul>
+</li>
+<li><a href="#sec-3">Changes</a>
+<ul>
+<li><a href="#sec-3-1">dq<sub>data</sub><sub>lock</sub></a></li>
+<li><a href="#sec-3-2">dqget/dqput</a>
+<ul>
+<li><a href="#sec-3-2-1">rename dqget() to dquot<sub>lookup</sub>().</a></li>
+<li><a href="#sec-3-2-2">dquot<sub>release</sub>()</a></li>
+<li><a href="#sec-3-2-3">dqput<sub>sb</sub>()</a></li>
+<li><a href="#sec-3-2-4">quota disable path / remount/ disable  and so on</a></li>
+<li><a href="#sec-3-2-5">add dqget(struct dquot)</a></li>
+<li><a href="#sec-3-2-6">dqput just call</a></li>
+<li><a href="#sec-3-2-7">add _<sub>dquot</sub><sub>lookup</sub><sub>nolock</sub></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#sec-4">Charts</a></li>
+</ul>
+</div>
+</div>
+<p>
+## -*- mode: org -*-
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">functionse</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">table</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="right" />
+
+<col  class="right" />
+
+<col  class="right" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="right">On</th>
+<th scope="col" class="left">d</th>
+<th scope="col" class="left">d</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="right">qd</th>
+<th scope="col" class="right">dq</th>
+<th scope="col" class="right">Of</th>
+<th scope="col" class="left">a</th>
+<th scope="col" class="left">r</th>
+</tr>
+
+<tr>
+<th scope="col" class="left">func name</th>
+<th scope="col" class="left">lst</th>
+<th scope="col" class="right">st</th>
+<th scope="col" class="left">ptr</th>
+<th scope="col" class="right">lk</th>
+<th scope="col" class="right">io</th>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">t</th>
+<th scope="col" class="left">t</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">wait<sub>on</sub><sub>dquot</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">+-</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>mark</sub><sub>dquot</sub><sub>dirty</sub></td>
+<td class="left">ad</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">clear<sub>dquot</sub><sub>dirty</sub></td>
+<td class="left">Grd</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>acquire</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">1</td>
+<td class="right">2</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>commit</sub>  cl drt</td>
+<td class="left">2rd</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">1</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>release</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">1</td>
+<td class="right">2</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">invalidate<sub>dquots</sub> INLK</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>scan</sub><sub>active</sub> ocfs2</td>
+<td class="left">2ti</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">1</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">vfs<sub>quota</sub><sub>sync</sub> -&gt;wr<sub>dq</sub></td>
+<td class="left">2td</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">1</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">shrink<sub>dqcache</sub><sub>memory</sub></td>
+<td class="left">dif</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dqput lts<sub>l</sub>: dq<sub>count</sub></td>
+<td class="left">1</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dqget lst<sub>l</sub>: dqhash</td>
+<td class="left">1</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>initialize</sub> -&gt;dqget</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">?WR</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">add<sub>dquot</sub><sub>ref</sub> / INLK</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">g</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">remove<sub>inode</sub><sub>dquot</sub><sub>ref</sub></td>
+<td class="left">1aF</td>
+<td class="right">&#xa0;</td>
+<td class="left">gWR</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">remove<sub>dquot</sub><sub>ref</sub> /  INLK</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">drop<sub>dquot</sub><sub>ref</sub> /</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">WR</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>drop</sub>   -&gt;dqput</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">WR</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>transfer</sub> -&gt;dqget</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">WR2</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">1</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>commit</sub><sub>info</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">1</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">vfs<sub>quota</sub><sub>disable</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">2</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">1</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">vfs<sub>load</sub><sub>quota</sub><sub>inode</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">3</td>
+<td class="left">WR2</td>
+<td class="right">&#xa0;</td>
+<td class="right">3</td>
+<td class="right">1</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">_<sub>dquot</sub><sub>alloc</sub><sub>space</sub> [as]</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>alloc</sub><sub>space</sub>  -&gt;as</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">1</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>reserve</sub><sub>space</sub> -&gt;as</td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>alloc</sub><sub>inode</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">1</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>claim</sub><sub>space</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">1</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>release</sub><sub>rsrv</sub><sub>spc</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>free</sub><sub>space</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">1</td>
+</tr>
+
+<tr>
+<td class="left">dquot<sub>free</sub><sub>inode</sub></td>
+<td class="left">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">rd</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="right">&#xa0;</td>
+<td class="left">1</td>
+<td class="left">1</td>
+</tr>
+</tbody>
+</table>
+<p>
+<b>dat</b>: dq<sub>data</sub><sub>lock</sub>
+<b>drt</b>: mark<sub>quota</sub><sub>dirty</sub>() is called form this function.
+i: inuse<sub>list</sub>
+d: dirty<sub>list</sub>
+f: free<sub>list</sub>
+F: tofree<sub>head</sub> (dq<sub>free</sub>) in remove<sub>inode</sub><sub>dquot</sub><sub>ref</sub>()
+g: guarded by this lock, caller must hold it.
+INLK : inode<sub>lock</sub>
+in dqptr:  WR = down<sub>write</sub>, rd = down<sub>read</sub>
+</p>
+<hr  />
+<pre class="example">
+sb-&gt;dq_op-&gt;write_dquot     =&gt; dquot_commit
+dquot_commit(dquot)
+  dqopt-&gt;opt[cnt]-&gt;commit_dq_blk(dquot) quota_format_ops
+  if(info_dirty(info)) {
+    dqopt-&gt;ops-&gt;write_file_info()
+</pre>
+</div>
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">functions</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+dquot<sub>acquire</sub>: set: DQ<sub>READ</sub><sub>B</sub>,DQ<sub>ACTIVE</sub><sub>B</sub>
+dquot<sub>release</sub>: clr: DQ<sub>ACTIVE</sub><sub>B</sub>
+</p>
+</div>
+<ul class="org-ul"><li><a id="sec-1-1-1-1" name="sec-1-1-1-1"></a>dqput:<br  /><div class="outline-text-5" id="text-1-1-1-1">
+<p>
+  again:
+     spin<sub>lock</sub>(dq<sub>list</sub><sub>lock</sub>)
+     if (dquot-&gt;dq<sub>count</sub> &gt; 1)
+         atoim<sub>dec</sub>(dquot-&gt;dq<sub>count</sub>)
+         if (!sb<sub>has</sub><sub>active</sub>)  wake<sub>up</sub> <i>* quotaoff *</i>
+         return;
+     else <i>* final dqput *</i>
+     if (DQ<sub>ACTIVE</sub><sub>B</sub>) &amp;&amp; dquot<sub>dirty</sub>
+        unlock(dq<sub>list</sub><sub>lock</sub>); -&gt;write<sub>dquot</sub>() lock(dq<sub>list</sub><sub>lock</sub>);
+     <i>* list<sub>lock</sub> was unlocked so dq<sub>count</sub> may be changed, goto again *</i>
+      goto again;
+      if (DQ<sub>ACTIVE</sub><sub>B</sub>)
+         unlock(dq<sub>list</sub><sub>lock</sub>)  release<sub>dquot</sub>(dquot);lock(dq<sub>list</sub><sub>lock</sub>)
+      goto again;
+      atomic<sub>dec</sub>(dquot-&gt;dq<sub>count</sub>)
+      put<sub>dquot</sub><sub>last</sub>(dquot);
+      spin<sub>unlock</sub>(dq<sub>list</sub><sub>lock</sub>)
+ON/off function
+vfs<sub>quota</sub><sub>on</sub><sub>remount</sub>
+vfs<sub>quota</sub><sub>on</sub><sub>path</sub>
+</p>
+</div>
+</li></ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Thoughts</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">dquot<sub>initialize</sub></h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+This functions takes dqptr<sub>sem</sub> for write, but it just add dquot to inode.
+<b>Seems</b> what it can not race with charge<sub>functions</sub> (who held it for read)
+i<sub>dquot</sub> NULL =&gt; good<sub>val</sub> even with down<sub>read</sub>(dqptr<sub>sem</sub>)
+i<sub>dquot</sub> good<sub>val</sub> =&gt; NULL only with down<sub>write</sub>(dqptr<sub>sem</sub>)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">dquot<sub>on</sub></h4>
+<div class="outline-text-4" id="text-1-2-2">
+<pre class="example">
+Currently we have no problem with space reservation for new quotas.
+simple testcase:
+quotactl --type 0 --off --device=/dev/sdb5 --path /mnt
+quotactl --type 1 --on --device=/dev/sdb5 --path /mnt
+dd if=/dev/zero of=/mnt/FILE bs=1M count=32
+quotactl --type 0 --on --device=/dev/sdb5 --path /mnt
+touch /mnt/FILE  # -&gt; vfs_dq_init (type == 0)
+sync # -&gt; dquot_claim_space() -&gt; reserve = 0 ==&gt; WARN_ON:964
+What we have to do? sync inode before attach?
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3">visiable quota changes</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+quota<sub>write</sub>/read performed via extXXX<sub>bread</sub>() which is call 
+ext4<sub>getblk</sub>(handle, inode, block, create, err);
+-&gt;ext4<sub>get</sub><sub>blocks</sub>(handle, inode, block, 1, &amp;dummy, flags);
+-&gt;sb<sub>getblk</sub>(inode-&gt;i<sub>sb</sub>, dummy.b<sub>blocknr</sub>);
+So, read from blkdev pagecache, thats why it is not visiable in
+quota's file page cache after write :).
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">TOP ISSUES</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="todo TODO">TODO</span> quota<sub>write</sub></h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Currently all modification operations in case of journalled quota
+result in quota<sub>write</sub>. Which result in write with i<sub>mutex</sub> :)
+This is real show stopper because all modification operation
+will be sequential.
+Think about concurent writes
+</p>
+</div>
+<div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Possible solutions.</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Some how we have to avoid i<sub>mutex</sub> 
+</p>
+<ul class="org-ul">
+<li>Introduce rw semaphore for quota file access
+<ul class="org-ul">
+<li>If quota already exist in file an i<sub>size</sub> will not changed then 
+require sem for read.
+</li>
+<li>Every other cases requires write sem.
+</li>
+</ul>
+</li>
+
+<li>statically allocate enough space for quota file and access without
+i<sub>mutex</sub>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="todo TODO">TODO</span> smart<sub>make</sub><sub>dirty</sub></h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In journal mode all modification operations result in
+explicit quota write under qio<sub>mutex</sub>. This fatally destroying
+performance. In fact this is not what we whant. we just want
+what data we change passed to the same transaction.
+this is possible because only one transaction may be open at
+a time. And quota functions always called with open transactions
+</p>
+</div>
+<div id="outline-container-sec-2-2-1" class="outline-4">
+<h4 id="sec-2-2-1">SMART MAKE DIRTY technique</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+We allow only one waiter at the time. This is the only sane solution.
+</p>
+
+<pre class="example">
+/* 
+ * Jurnalled quota assumes that data and quota io must belongs to the
+ * same transaction.
+ */
+static int mark_dirty_journalled(struct inode * inode, int nr, int wait)
+{
+	struct dquot tmp;
+	int ret = 0;
+	spin_lock(&amp;data_lock);
+	__dquot.dq_dqb.dqb_curspace += nr;
+	spin_unlock(&amp;data_lock);
+
+	/* the core algorithm */
+	if (!test_and_set_bit(DQ_IO_B, &amp;dquot-&gt;dq_flags))
+		/* Ok there is a other waiter of the mutex */
+		return 0;
+
+	mutex_lock(&amp;inode-&gt;i_mutex);
+	/*
+	 * After mutex is locked by us, let every body know's what
+	 * new portion of data was scheduled for write.
+	 */
+        clear_bit(DQ_IO_B, &amp;dquot-&gt;dq_flags);	 
+
+	spin_lock(&amp;data_lock);
+	memcpy(&amp;tmp, &amp;__dquot, sizeof(__dquot));
+	spin_unlock(&amp;data_lock);
+
+	ret = commit_quot(inode, &amp;tmp);
+
+	mutex_unlock(&amp;inode-&gt;i_mutex);
+	return ret;
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="todo TODO">TODO</span> rewrite vfs<sub>dq</sub><sub>init</sub> <code>[1/2]</code></h3>
+<div class="outline-text-3" id="text-2-3">
+<dl class="org-dl">
+<dt> <code>[X]</code> dqptr\<sub>sem</sub>-improvements.patch </dt><dd>transfer ptr<sub>sem</sub> from write to read
+</dd>
+<dt> <code>[&#xa0;]</code> check </dt><dd>check i\<sub>dquot</sub> before calling dqget() this cover most of cases.  
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Changes</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">dq<sub>data</sub><sub>lock</sub></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+protect dquot-&gt;dq<sub>dqblk</sub> and some bits in dquot-&gt;dq<sub>flags</sub>  <br  />
+   dq<sub>dqblk</sub> is mostly for writes, so just protect it with per dquot spin<sub>lock</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">dqget/dqput</h3>
+<div class="outline-text-3" id="text-3-2">
+</div><div id="outline-container-sec-3-2-1" class="outline-4">
+<h4 id="sec-3-2-1">rename dqget() to dquot<sub>lookup</sub>().</h4>
+<div class="outline-text-4" id="text-3-2-1">
+<p>
+Because it is responsible for lookup, not get.
+</p>
+<dl class="org-dl">
+<dt> dquot<sub>lookup</sub>() </dt><dd>should call dqget<sub>sb</sub>() for each new dquot,
+and call dqput<sub>sb</sub> on dquot<sub>release</sub>()
+</dd>
+</dl>
+</div>
+</div>
+<div id="outline-container-sec-3-2-2" class="outline-4">
+<h4 id="sec-3-2-2">dquot<sub>release</sub>()</h4>
+<div class="outline-text-4" id="text-3-2-2">
+<p>
+should call dqput<sub>sb</sub> on release
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-3" class="outline-4">
+<h4 id="sec-3-2-3">dqput<sub>sb</sub>()</h4>
+<div class="outline-text-4" id="text-3-2-3">
+<p>
+should call wakeup for the last ref.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-4" class="outline-4">
+<h4 id="sec-3-2-4">quota disable path / remount/ disable  and so on</h4>
+<div class="outline-text-4" id="text-3-2-4">
+<p>
+should wait for for last dqput<sub>sb</sub>() if any.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-5" class="outline-4">
+<h4 id="sec-3-2-5">add dqget(struct dquot)</h4>
+<div class="outline-text-4" id="text-3-2-5">
+<p>
+{ atomic<sub>inc</sub>(&amp;dquot.dq<sub>count</sub>); }
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-6" class="outline-4">
+<h4 id="sec-3-2-6">dqput just call</h4>
+<div class="outline-text-4" id="text-3-2-6">
+<p>
+{ atomic<sub>dec</sub><sub>and</sub><sub>lock</sub>(&amp;dquot.dq<sub>count</sub>, )}
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-2-7" class="outline-4">
+<h4 id="sec-3-2-7">add _<sub>dquot</sub><sub>lookup</sub><sub>nolock</sub></h4>
+<div class="outline-text-4" id="text-3-2-7">
+<p>
+Which just search quota in the hash tree and return dq
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Charts</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+open-close 1000000 on one fs but in different directories
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">num task</td>
+<td class="left">ext4 w/o patch</td>
+<td class="left">ext4 + dquot<sub>inittialize</sub> fix</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">3197908  312</td>
+<td class="left">3143428  318</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">3157374  316</td>
+<td class="left">3169983  315</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">3173014  315</td>
+<td class="left">3168818  315</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">4450697  224</td>
+<td class="left">4564706  219</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">4605507  217</td>
+<td class="left">4596803  217</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">4660029  214</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">7341495  136</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">7711750  129</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">8070471  123</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">10800260  92</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">11699372  85</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">10882656  91</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Dmitry Monakhov</p>
+<p class="date">Created: 2015-04-05 Sun 12:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

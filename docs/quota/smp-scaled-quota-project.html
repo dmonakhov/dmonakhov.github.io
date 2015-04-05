@@ -1,51 +1,118 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-lang="en" xml:lang="en">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-
 <title>Quota SMP scalability project page</title>
-<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
-<meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2010-03-29 08:24:06 MSD"/>
-<meta name="author" content="Dmitry Monakhov"/>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
+<!-- 2015-04-05 Sun 12:54 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Dmitry Monakhov" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  html { font-family: Times, serif; font-size: 12pt; }
   .title  { text-align: center; }
-  .todo   { color: red; }
+  .todo   { font-family: monospace; color: red; }
   .done   { color: green; }
-  .tag    { background-color: #add8e6; font-weight:normal }
-  .target { }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  p.verse { margin-left: 3% }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
   pre {
-	border: 1pt solid #AEBDCC;
-	background-color: #F3F5F7;
-	padding: 5pt;
-	font-family: courier, monospace;
-        font-size: 90%;
-        overflow:auto;
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
-  table { border-collapse: collapse; }
-  td, th { vertical-align: top; }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
   dt { font-weight: bold; }
-  div.figure { padding: 0.5em; }
-  div.figure p { text-align: center; }
-  .linenr { font-size:smaller }
-  .code-highlighted {background-color:#ffff00;}
-  .org-info-js_info-navigation { border-style:none; }
-  #org-info-js_console-label { font-size:10px; font-weight:bold;
-                               white-space:nowrap; }
-  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
-                                 font-weight:bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
 <script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
@@ -71,31 +138,29 @@ lang="en" xml:lang="en">
 <body>
 <div id="content">
 <h1 class="title">Quota SMP scalability project page</h1>
-
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 quota SMP scalability project </a>
+<li><a href="#sec-1">quota SMP scalability project</a>
 <ul>
-<li><a href="#sec-1.1">1.1 Intro </a></li>
-<li><a href="#sec-1.2">1.2 Current locks and locking rules </a>
+<li><a href="#sec-1-1">Intro</a></li>
+<li><a href="#sec-1-2">Current locks and locking rules</a>
 <ul>
-<li><a href="#sec-1.2.1">1.2.1 Locks </a></li>
-<li><a href="#sec-1.2.2">1.2.2 Functions and lock table </a></li>
+<li><a href="#sec-1-2-1">Locks</a></li>
+<li><a href="#sec-1-2-2">Functions and lock table</a></li>
 </ul>
 </li>
-<li><a href="#sec-1.3">1.3 Most contented locks chart </a></li>
-<li><a href="#sec-1.4">1.4 locking changes </a>
+<li><a href="#sec-1-3">Most contented locks chart</a></li>
+<li><a href="#sec-1-4">locking changes</a>
 <ul>
-<li><a href="#sec-1.4.1">1.4.1 i_mutex for quota file </a></li>
-<li><a href="#sec-1.4.2">1.4.2 dqio_mutex </a></li>
-<li><a href="#sec-1.4.3">1.4.3 dqptr_sem </a></li>
-<li><a href="#sec-1.4.4">1.4.4 dq_data_lock </a></li>
-<li><a href="#sec-1.4.5">1.4.5 dqstats </a></li>
-<li><a href="#sec-1.4.6">1.4.6 dquot hash table </a></li>
-<li><a href="#sec-1.4.7">1.4.7 write doc about  dquot reference counting redesign </a></li>
+<li><a href="#sec-1-4-1">i\<sub>mutex</sub> for quota file</a></li>
+<li><a href="#sec-1-4-2">dqio\<sub>mutex</sub></a></li>
+<li><a href="#sec-1-4-3">dqptr\<sub>sem</sub></a></li>
+<li><a href="#sec-1-4-4">dq\<sub>data\</sub><sub>lock</sub></a></li>
+<li><a href="#sec-1-4-5">dqstats</a></li>
+<li><a href="#sec-1-4-6">dquot hash table</a></li>
+<li><a href="#sec-1-4-7">write doc about  dquot reference counting redesign</a></li>
 </ul>
 </li>
 </ul>
@@ -104,96 +169,69 @@ lang="en" xml:lang="en">
 </div>
 </div>
 
-<div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> quota SMP scalability project </h2>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">quota SMP scalability project</h2>
 <div class="outline-text-2" id="text-1">
-
-
-</div>
-
-<div id="outline-container-1.1" class="outline-3">
-<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Intro </h3>
-<div class="outline-text-3" id="text-1.1">
-
-<p>Current Linux quota implementation has been written about 10 year ago.
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Intro</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Current Linux quota implementation has been written about 10 year ago.
 It satisfy just basic smp correctness semantics(deadlock avoidance).
 Code contains several global locks which protects data.
 As result it has awful smp scalability. It is almost useless
 to use quota on systems with more than 8 CPU. This project is 
 aimed to rewrite quota code to make it more scalable. This paper
 contains guide for accomplish this task. The paper divided in to three parts:
-</p><dl>
-<dt>Current locks and locking rules</dt><dd>
-It is almost impossible to understand
+</p>
+<dl class="org-dl">
+<dt> Current locks and locking rules </dt><dd>It is almost impossible to understand
 real locking rules from code comments. So I've collected updated list
 of locks, and table of locks for each quota function.
 </dd>
-<dt>Definition of most contented locks</dt><dd>
-Definition of most contented locks
+<dt> Definition of most contented locks </dt><dd>Definition of most contented locks
 </dd>
-<dt>Proposed locking changes</dt><dd>
-This part contains basic ideas for locking 
+<dt> Proposed locking changes </dt><dd>This part contains basic ideas for locking 
 changes, and purposed solutions.
 </dd>
 </dl>
 </div>
-
 </div>
-
-<div id="outline-container-1.2" class="outline-3">
-<h3 id="sec-1.2"><span class="section-number-3">1.2</span> Current locks and locking rules </h3>
-<div class="outline-text-3" id="text-1.2">
-
-
-</div>
-
-<div id="outline-container-1.2.1" class="outline-4">
-<h4 id="sec-1.2.1"><span class="section-number-4">1.2.1</span> Locks </h4>
-<div class="outline-text-4" id="text-1.2.1">
-
-<dl>
-<dt>dq_list_lock</dt><dd>
-protects all lists with quotas and quota formats 
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Current locks and locking rules</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">Locks</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<dl class="org-dl">
+<dt> dq\<sub>list\</sub><sub>lock</sub> </dt><dd>protects all lists with quotas and quota formats 
 dqstats structure containing statistics about the lists, dqstats structure(<b>madness</b>)
 </dd>
-<dt>dq_data_lock</dt><dd>
-protects data from dq_dqb and also mem_dqinfo structures and
-also guards consistency of dquot-&gt;dq_dqb with inode-&gt;i_blocks, i_bytes.                
+<dt> dq\<sub>data\</sub><sub>lock</sub> </dt><dd>protects data from dq\<sub>dqb</sub> and also mem\<sub>dqinfo</sub> structures and
+also guards consistency of dquot-&gt;dq\<sub>dqb</sub> with inode-&gt;i\<sub>blocks</sub>, i\<sub>bytes</sub>.                    
 </dd>
-<dt>dq_state_lock protects</dt><dd>
-modifications of quota state (on quotaon and quotaoff)
+<dt> dq\<sub>state\</sub><sub>lock</sub> protects </dt><dd>modifications of quota state (on quotaon and quotaoff)
 </dd>
-<dt>dqonoff_sem</dt><dd>
-protect from on/off race
+<dt> dqonoff\<sub>sem</sub> </dt><dd>protect from on/off race
 </dd>
-<dt>dqptr_sem (per sb rw sem)</dt><dd>
-Any operation working on dquots via inode pointers must hold it.
+<dt> dqptr\<sub>sem</sub> (per sb rw sem) </dt><dd>Any operation working on dquots via inode pointers must hold it.
 </dd>
-<dt>dq_lock (per dquot mutex)</dt><dd>
-dquot is locked only when it is being read to memory
+<dt> dq\<sub>lock</sub> (per dquot mutex) </dt><dd>dquot is locked only when it is being read to memory
 </dd>
-<dt>dqio_mutex (per dquot mutex)</dt><dd>
-per sb io mutex.
+<dt> dqio\<sub>mutex</sub> (per dquot mutex) </dt><dd>per sb io mutex.
 </dd>
-<dt>i_mutex (prer quota file)</dt><dd>
-each io operation required this mutex,
-in case of journalled quota <span style="text-decoration:underline;">all operations result in quota write</span>.
-
+<dt> i\<sub>mutex</sub> (prer quota file) </dt><dd>each io operation required this mutex,
+in case of journalled quota <span class="underline">all operations result in quota write</span>.
 </dd>
 </dl>
 </div>
-
 </div>
 
-<div id="outline-container-1.2.2" class="outline-4">
-<h4 id="sec-1.2.2"><span class="section-number-4">1.2.2</span> Functions and lock table </h4>
-<div class="outline-text-4" id="text-1.2.2">
-
-
-
-
-
-<pre class="example"> *table legend* 
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">Functions and lock table</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<pre class="example">
+ *table legend* 
   - dat :: dq_data_lock
   - drt :: mark_quota_dirty() is called form this function.
   - number :: lock order
@@ -202,10 +240,10 @@ in case of journalled quota <span style="text-decoration:underline;">all operati
   - in dqptr ::  WR = down_write, rd = down_read
   - List manipulation in lst column
        *First char == an action, 
-         - a :: add in to a list              
+         - a :: add in to a list	      
          - r :: remove from a list
          - t :: traverse a list
-       *Second char == a list           
+       *Second char == a list		
          - i :: inuse_list
          - d :: dirty_list
          - f :: free_list
@@ -238,6 +276,7 @@ in case of journalled quota <span style="text-decoration:underline;">all operati
 | dquot_commit_info         |     |    |     |    |  1 |    |   |   |
 | vfs_quota_disable         |     |  2 |     |    |    |  1 |   |   |
 | vfs_load_quota_inode      |     |  3 | WR2 |    |  3 |  1 |   |   |
+|                           |     |    |     |    |    |    |   |   |
 | __dquot_alloc_space [as]  |     |    |     |    |    |    | 1 |   |
 | dquot_alloc_space  -&gt;as   |     |    | rd  |    |    |    |   | 1 |
 | dquot_reserve_space -&gt;as  |     |    | rd  |    |    |    |   |   |
@@ -248,109 +287,86 @@ in case of journalled quota <span style="text-decoration:underline;">all operati
 | dquot_free_inode          |     |    | rd  |    |    |    | 1 | 1 |
 |---------------------------+-----+----+-----+----+----+----+---+---|
 </pre>
-
-
-
 </div>
 </div>
-
 </div>
-
-<div id="outline-container-1.3" class="outline-3">
-<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Most contented locks chart </h3>
-<div class="outline-text-3" id="text-1.3">
-
-<dl>
-<dt>i_mutex</dt><dd>
-This is most annoying lock in case of journalled quota.
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Most contented locks chart</h3>
+<div class="outline-text-3" id="text-1-3">
+<ol class="org-ol">
+<li>i\<sub>mutex</sub> :: This is most annoying lock in case of journalled quota.
 Just think about it. Then several concurrent users perform write.
-they have to getting in to sleep on i_mutex. <b>CRAP</b> <br/>
-vfs_dq_alloc_space()-&gt;mark_quota_dirty()-&gt;write_quot()
-</dd>
-<dt>dqio_mutex</dt><dd>
-Same as previous, per sb io mutex.
-</dd>
-<dt>dqptr_sem</dt><dd>
-Currently this acquired on write during vfs_dq_init()
+they have to getting in to sleep on i\<sub>mutex</sub>. <b>CRAP</b> <br  />
+               vfs\<sub>dq\</sub><sub>alloc\</sub><sub>space</sub>()-&gt;mark\<sub>quota\</sub><sub>dirty</sub>()-&gt;write\<sub>quot</sub>()
+</li>
+<li>dqio\<sub>mutex</sub> :: Same as previous, per sb io mutex.
+</li>
+<li>dqptr\<sub>sem</sub> :: Currently this acquired on write during vfs\<sub>dq\</sub><sub>init</sub>()
 In fact many vfs functions call this callback, for example
 (open(for write), truncate, unlink, link, etc).
-</dd>
-<dt>dq_data_lock</dt><dd>
-Problem with this lock is what it is global. It must
+</li>
+<li>dq\<sub>data\</sub><sub>lock</sub> :: Problem with this lock is what it is global. It must
 protect just given dquot and inode's bytes struct.
-</dd>
-<dt>dq_list_lock</dt><dd>
-Again the lock is global, proper code reorganization will help.
-</dd>
-<dt>dq_state_lock</dt><dd>
-Why do we need it? we already have dqonoff_sem,
+</li>
+<li>dq\<sub>list\</sub><sub>lock</sub> :: Again the lock is global, proper code reorganization will help.
+</li>
+<li>dq\<sub>state\</sub><sub>lock</sub> :: Why do we need it? we already have dqonoff\<sub>sem</sub>,
 This is overwhelming.
+</li>
+</ol>
+</div>
+</div>
 
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">locking changes</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1">i\<sub>mutex</sub> for quota file</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+Do we really need it? Quota file can not be truncated, it is append only.<br  />
+    Quota file grows only if there is no space for new dquot. Once allocated
+dquota never change it's location. So let's replace i\<sub>mutex</sub> with rw\<sub>sem</sub>.<br  />
+    <b>Locking rules</b>
+</p>
+<dl class="org-dl">
+<dt> down\<sub>write</sub> </dt><dd>Then new dquot has not allocated inside quota file yet.
+</dd>
+<dt> down\<sub>read</sub> </dt><dd>For dquot which already has offset inside quota file.
 </dd>
 </dl>
 </div>
-
 </div>
-
-<div id="outline-container-1.4" class="outline-3">
-<h3 id="sec-1.4"><span class="section-number-3">1.4</span> locking changes </h3>
-<div class="outline-text-3" id="text-1.4">
-
-
-
-</div>
-
-<div id="outline-container-1.4.1" class="outline-4">
-<h4 id="sec-1.4.1"><span class="section-number-4">1.4.1</span> i_mutex for quota file </h4>
-<div class="outline-text-4" id="text-1.4.1">
-
-<p>Do we really need it? Quota file can not be truncated, it is append only.<br/>
-Quota file grows only if there is no space for new dquot. Once allocated
-dquota never change it's location. So let's replace i_mutex with rw_sem.<br/>
-<b>Locking rules</b>
-</p><dl>
-<dt>down_write</dt><dd>
-Then new dquot has not allocated inside quota file yet.
-</dd>
-<dt>down_read</dt><dd>
-For dquot which already has offset inside quota file.
-</dd>
-</dl>
-</div>
-
-</div>
-
-<div id="outline-container-1.4.2" class="outline-4">
-<h4 id="sec-1.4.2"><span class="section-number-4">1.4.2</span> dqio_mutex </h4>
-<div class="outline-text-4" id="text-1.4.2">
-
-<p>In case of journalled quota we always call dquot_commit() after each
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2">dqio\<sub>mutex</sub></h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+In case of journalled quota we always call dquot\<sub>commit</sub>() after each
 dquot modification, but in fact other thread may change dquot after
-we dropped dq_data_lock, but before we have copied data in commit_dqblk()
-So let's use only one waiter at a time. <br/>
-<b>HUGE NOTE</b> This approach will works only because of ext3/4 
+we dropped dq\<sub>data\</sub><sub>lock</sub>, but before we have copied data in commit\<sub>dqblk</sub>()
+So let's use only one waiter at a time. <br  />
+    <b>HUGE NOTE</b> This approach will works only because of ext3/4 
 allows the only one running transaction at a time, so both
 task (current and the one which wait for the lock) belongs to the
-same transaction. <span style="text-decoration:underline;">see example</span>
+same transaction. <span class="underline">see example</span>
 </p>
-<ul>
-<li id="sec-1.4.2.1">alloc_space() <br/>
+</div>
 
-
-
-<pre class="example">alloc_space()
+<ul class="org-ul"><li><a id="sec-1-4-2-1" name="sec-1-4-2-1"></a>alloc\<sub>space</sub>()<br  /><div class="outline-text-5" id="text-1-4-2-1">
+<pre class="example">
+alloc_space()
   /* update dquot */
   mark_quota_dirty()
     dquot_commit()
       if (test_and_set_bit(DQ_DIRTY_B, &amp;dquot-&gt;dq_flags))
-         /* Other task already wait for the mutex, and our changes will
-          * be copied and written to a disk by this waiter.
-          * _HUGE NOTE_: This approach will works only because of ext3/4 
-          * allows the only one running transaction at a time, so both
-          * task (current and the one which wait for the lock) belongs 
-          * to the same transaction
-          */
-         return;
+	 /* Other task already wait for the mutex, and our changes will
+	  * be copied and written to a disk by this waiter.
+	  * _HUGE NOTE_: This approach will works only because of ext3/4 
+	  * allows the only one running transaction at a time, so both
+	  * task (current and the one which wait for the lock) belongs 
+	  * to the same transaction
+	  */
+	 return;
       lock(dqopt-&gt;dqio_mutex)
       copy_mem(tmp, dquot-&gt;dq_dqb, size)
       /* let others know what data was already copied, so new copy is needed*/
@@ -358,91 +374,75 @@ same transaction. <span style="text-decoration:underline;">see example</span>
       /* perform io here */
       unlock(dqopt-&gt;dqio_mutex)
 </pre>
-
-
-
-</li>
-</ul>
 </div>
-
+</li></ul>
 </div>
-
-<div id="outline-container-1.4.3" class="outline-4">
-<h4 id="sec-1.4.3"><span class="section-number-4">1.4.3</span> dqptr_sem </h4>
-<div class="outline-text-4" id="text-1.4.3">
-
-<p>Currently this lock is taken for write only in vfs_dq_init() and vfs_dq_transfer(). <br/>
-vfs_dq_init() is most performance critical and trivial operation.
-Function just assign dquot to inode. So we can easily change it to down_read().
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3">dqptr\<sub>sem</sub></h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+Currently this lock is taken for write only in vfs\<sub>dq\</sub><sub>init</sub>() and vfs\<sub>dq\</sub><sub>transfer</sub>(). <br  />
+    vfs\<sub>dq\</sub><sub>init</sub>() is most performance critical and trivial operation.
+Function just assign dquot to inode. So we can easily change it to down\<sub>read</sub>().
 </p>
 </div>
-
 </div>
 
-<div id="outline-container-1.4.4" class="outline-4">
-<h4 id="sec-1.4.4"><span class="section-number-4">1.4.4</span> dq_data_lock </h4>
-<div class="outline-text-4" id="text-1.4.4">
-
-<p>Replace this lock by per dquot lock. Locks will acquired in native order
+<div id="outline-container-sec-1-4-4" class="outline-4">
+<h4 id="sec-1-4-4">dq\<sub>data\</sub><sub>lock</sub></h4>
+<div class="outline-text-4" id="text-1-4-4">
+<p>
+Replace this lock by per dquot lock. Locks will acquired in native order
 </p>
-
-
-<pre class="example">dquot = inode-&gt;i_dquot;
+<pre class="example">
+dquot = inode-&gt;i_dquot;
 for (cnt = 0; cnt &lt; MAXQUOTAS; cnt++)
   if (dquot[cnt])
      lock(&amp;dquot[cnt].data_lock);
 /* modify dquotas here */
 ....
 </pre>
-
-
-
 <p>
-On dquot_transfer() we have to lock both from_dquot and to_dquot
-so just use generic double_lock() scenario.
-</p></div>
-
+On dquot\<sub>transfer</sub>() we have to lock both from\<sub>dquot</sub> and to\<sub>dquot</sub>
+so just use generic double\<sub>lock</sub>() scenario.
+</p>
 </div>
-
-<div id="outline-container-1.4.5" class="outline-4">
-<h4 id="sec-1.4.5"><span class="section-number-4">1.4.5</span> dqstats </h4>
-<div class="outline-text-4" id="text-1.4.5">
-
-<p>Quota stats should not use any locking. Let's just use anomic
+</div>
+<div id="outline-container-sec-1-4-5" class="outline-4">
+<h4 id="sec-1-4-5">dqstats</h4>
+<div class="outline-text-4" id="text-1-4-5">
+<p>
+Quota stats should not use any locking. Let's just use anomic
 operations for this.
-</p></div>
-
+</p>
 </div>
-
-<div id="outline-container-1.4.6" class="outline-4">
-<h4 id="sec-1.4.6"><span class="section-number-4">1.4.6</span> dquot hash table </h4>
-<div class="outline-text-4" id="text-1.4.6">
-
-<p>must being protected by RCU. It is better to prepare patch instead
+</div>
+<div id="outline-container-sec-1-4-6" class="outline-4">
+<h4 id="sec-1-4-6">dquot hash table</h4>
+<div class="outline-text-4" id="text-1-4-6">
+<p>
+must being protected by RCU. It is better to prepare patch instead
 of describing it here.
-</p></div>
-
+</p>
 </div>
-
-<div id="outline-container-1.4.7" class="outline-4">
-<h4 id="sec-1.4.7"><span class="section-number-4">1.4.7</span> write doc about  dquot reference counting redesign </h4>
-<div class="outline-text-4" id="text-1.4.7">
-
-<p>Currently dqget() consists of several simple operations:
-</p><dl>
-<dt>dq_lookup_nolock()</dt><dd>
-trivial lookup in hash table
+</div>
+<div id="outline-container-sec-1-4-7" class="outline-4">
+<h4 id="sec-1-4-7">write doc about  dquot reference counting redesign</h4>
+<div class="outline-text-4" id="text-1-4-7">
+<p>
+Currently dqget() consists of several simple operations:
+</p>
+<dl class="org-dl">
+<dt> dq\<sub>lookup\</sub><sub>nolock</sub>() </dt><dd>trivial lookup in hash table
 </dd>
-<dt>dq_read_insert()</dt><dd>
-read dquot from disk and insert to hash_table
+<dt> dq\<sub>read\</sub><sub>insert</sub>() </dt><dd>read dquot from disk and insert to hash\<sub>table</sub>
 </dd>
-<dt>__dqget()</dt><dd>
-inc dq_count
+<dt> \<sub>\</sub><sub>dqget</sub>() </dt><dd>inc dq\<sub>count</sub>
 </dd>
 </dl>
-
-<p>First of all we have to rename dqget() dq_lookup(). <br/>
-In fact dq_lookup_nolock() will succeed in 99% of cases(fast_path)
+<p>
+First of all we have to rename dqget() dq\<sub>lookup</sub>(). <br  />
+   In fact dq\<sub>lookup\</sub><sub>nolock</sub>() will succeed in 99% of cases(fast\<sub>path</sub>)
 So dqget becomes lockess on the fast path.
 <b>TODO:</b> Complete this topic.
 </p>
@@ -450,13 +450,12 @@ So dqget becomes lockess on the fast path.
 </div>
 </div>
 </div>
-<div id="postamble">
-<p class="author"> Author: Dmitry Monakhov
-<a href="mailto:dmonakhov@openvz.org">&lt;dmonakhov@openvz.org&gt;</a>
-</p>
-<p class="date"> Date: 2010-03-29 08:24:06 MSD</p>
-<p class="creator">HTML generated by org-mode 6.30c in emacs 23</p>
 </div>
+<div id="postamble" class="status">
+<p class="author">Author: Dmitry Monakhov</p>
+<p class="date">Created: 2015-04-05 Sun 12:54</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>
